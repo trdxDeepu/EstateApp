@@ -1,9 +1,9 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const location = useLocation();
-  console.log(location.pathname);
+ const navigate = useNavigate();
 
   const pathMatchRouter = (routes) => {
     if (routes === location.pathname) return true;
@@ -23,28 +23,32 @@ const Header = () => {
             src="https://static.rdc.moveaws.com/images/logos/rdc-logo-default.svg"
             alt="logo"
             className="h-5 cursor-pointer "
+            onClick={()=>navigate("/")}
           />
         </div>
         <div>
           <ul className="flex space-x-10 ">
             <li
-              className={`py-3 text-sm font-semibold
+              className={` cursor-pointer py-3 text-sm font-semibold
              text-gray-400 border-b-[3px] border-b-transparent 
              ${pathMatchRouter("/") && "text-black border-b-red-500"}`}
+             onClick={()=>navigate("/")}
             >
               Home
             </li>
             <li
-              className={`py-3 text-sm font-semibold
+              className={` cursor-pointer py-3 text-sm font-semibold
              text-gray-400 border-b-[3px] border-b-transparent 
              ${pathMatchRouter("/offer") && "text-black border-b-red-500"}`}
+             onClick={()=>navigate("/offer")}
             >
               Offers
             </li>
             <li
-              className={`py-3 text-sm font-semibold
+              className={` cursor-pointer py-3 text-sm font-semibold
              text-gray-400 border-b-[3px] border-b-transparent 
              ${pathMatchRouter("/sign-in") && "text-black border-b-red-500"}`}
+             onClick={()=>navigate("/sign-in")}
             >
               Sign In
             </li>
