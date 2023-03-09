@@ -5,6 +5,10 @@ const Header = () => {
   const location = useLocation();
   console.log(location.pathname);
 
+  const pathMatchRouter = (routes) => {
+    if (routes === location.pathname) return true;
+  };
+
   return (
     <div
       className="bg-white border-b shadow-md sticky 
@@ -23,9 +27,27 @@ const Header = () => {
         </div>
         <div>
           <ul className="flex space-x-10 ">
-            <li>Home</li>
-            <li>Offers</li>
-            <li>Sign In</li>
+            <li
+              className={`py-3 text-sm font-semibold
+             text-gray-400 border-b-[3px] border-b-transparent 
+             ${pathMatchRouter("/") && "text-black border-b-red-500"}`}
+            >
+              Home
+            </li>
+            <li
+              className={`py-3 text-sm font-semibold
+             text-gray-400 border-b-[3px] border-b-transparent 
+             ${pathMatchRouter("/offer") && "text-black border-b-red-500"}`}
+            >
+              Offers
+            </li>
+            <li
+              className={`py-3 text-sm font-semibold
+             text-gray-400 border-b-[3px] border-b-transparent 
+             ${pathMatchRouter("/sign-in") && "text-black border-b-red-500"}`}
+            >
+              Sign In
+            </li>
           </ul>
         </div>
       </header>
