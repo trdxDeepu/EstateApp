@@ -10,6 +10,8 @@ import {
 import { db } from "../Firebase";
 import { useNavigate } from "react-router-dom";
 import { serverTimestamp, setDoc, Timestamp,doc } from "firebase/firestore";
+import {toast} from "react-toastify"
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -48,9 +50,11 @@ const SignUp = () => {
       formDataCopy.Timestamp = serverTimestamp();
 
       await setDoc(doc(db, "users", user.uid), formDataCopy);
+      toast.success("Signed in successfully")
       navigate('/')
+
     } catch (error) {
-      console.log(error);
+      toast.error("Error signing in")
     }
   };
 
