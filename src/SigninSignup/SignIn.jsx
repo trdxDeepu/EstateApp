@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Oauth from "./Oauth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { db } from "../Firebase";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -21,11 +26,23 @@ const SignIn = () => {
     }));
   };
 
-  const OnSubmit = (e) => {
+  const OnSubmit = async (e) => {
     e.preventDefault();
-    
-  }
-
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if(userCredential.user) {
+        toastr.success("Signed in successfully")
+        navigate("/")
+      }
+    } catch (error) {
+      toast.error("User not allowed to Sign in");
+    }
+  };
 
   return (
     <section>
@@ -118,7 +135,7 @@ const SignIn = () => {
               </p>
             </div>
           </form>
-          <Oauth/>
+          <Oauth />
         </div>
       </div>
     </section>
