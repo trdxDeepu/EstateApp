@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import Oauth from "./Oauth";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -111,6 +112,7 @@ const SignIn = () => {
               </p>
             </div>
           </form>
+          <Oauth/>
         </div>
       </div>
     </section>
