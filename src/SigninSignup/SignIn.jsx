@@ -36,7 +36,7 @@ const SignIn = () => {
         password
       );
       if(userCredential.user) {
-        toastr.success("Signed in successfully")
+        toast.success("Signed in successfully")
         navigate("/")
       }
     } catch (error) {
