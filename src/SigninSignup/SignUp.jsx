@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Oauth from "./Oauth";
-
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { db } from "../Firebase";
+import { useNavigate } from "react-router-dom";
+import { serverTimestamp, setDoc, Timestamp,doc } from "firebase/firestore";
 const SignUp = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -22,6 +30,30 @@ const SignUp = () => {
     }));
   };
 
+  const OnSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+      const user = userCredentials.user;
+      const formDataCopy = { ...formData };
+      delete formDataCopy.password;
+      formDataCopy.Timestamp = serverTimestamp();
+
+      await setDoc(doc(db, "users", user.uid), formDataCopy);
+      navigate('/')
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section>
       <h1 className="text-3xl font-serif text-center mt-6 font-bold ">
@@ -36,7 +68,7 @@ const SignUp = () => {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form action="">
+          <form action="" onSubmit={OnSubmit}>
             <input
               type="text"
               className=" w-full px-4 py-2 text-xl text-gray-700
@@ -129,4 +161,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUP;
+export default SignUp;

@@ -21,6 +21,12 @@ const SignIn = () => {
     }));
   };
 
+  const OnSubmit = (e) => {
+    e.preventDefault();
+    
+  }
+
+
   return (
     <section>
       <h1 className="text-3xl font-serif text-center mt-6 font-bold ">
@@ -35,7 +41,7 @@ const SignIn = () => {
           />
         </div>
         <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-          <form action="">
+          <form action="" onSubmit={OnSubmit}>
             <input
               type="email"
               className=" w-full px-4 py-2 text-xl text-gray-700
