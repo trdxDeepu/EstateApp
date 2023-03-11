@@ -87,30 +87,30 @@ const SignIn = () => {
                 </Link>
               </p>
             </div>
-          </form>
-          <button
-            className="w-full bg-blue-600 text-white px-7 
+            <button
+              className="w-full bg-blue-600 text-white px-7 
           py-3 text-sm font-serif font-medium uppercase 
           rounded-md hover:bg-blue-700 shadow-md
           transition duration-150 ease-in-out
           hover: shadow-lg active:bg-blue-800  "
-          >
-            Sign In
-          </button>
-          <div
-            className="flex items-center  my-4 before:border-t 
+            >
+              Sign In
+            </button>
+            <div
+              className="flex items-center  my-4 before:border-t 
             before:flex-1 before:border-gray-300 
             after:border-t after:flex-1
              after:border-gray-300
           "
-          >
-            <p
-              className="text-center font-semibold font-serif 
-            mx-4"
             >
-              OR
-            </p>
-          </div>
+              <p
+                className="text-center font-semibold font-serif 
+            mx-4"
+              >
+                OR
+              </p>
+            </div>
+          </form>
         </div>
       </div>
     </section>
