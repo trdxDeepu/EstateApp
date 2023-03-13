@@ -37,7 +37,7 @@ const SignIn = () => {
       );
       if(userCredential.user) {
         toast.success("Signed in successfully")
-        navigate("/")
+        navigate("/profile")
       }
     } catch (error) {
       toast.error("User not allowed to Sign in");

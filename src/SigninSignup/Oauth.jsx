@@ -26,7 +26,7 @@ const Oauth = () => {
       }
 
       toast.success("Signed in successfully");
-      navigate("/");
+      navigate("/profile");
     } catch (err) {
       toast.error("error signing in");
     }
