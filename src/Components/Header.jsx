@@ -1,7 +1,23 @@
-import React from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
+
+  const [pageState , setPageState] = useState("Sign In")
+
+  const auth = getAuth();
+  useEffect(()=>{
+    onAuthStateChanged(auth,(user)=>{
+      if(user){
+        setPageState(user.displayName)
+      }
+      else{
+        setPageState("Sign In")
+      }
+    })
+  },[auth])
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -33,7 +49,7 @@ const Header = () => {
             <li
               className={` cursor-pointer py-3 text-md font-semibold text-gray-400
               border-b-[3px] border-b-transparent ${
-                pathMatchRouter("/") && "text-blue-600 border-b-green-500"
+                pathMatchRouter("/") && "text-gray-600 border-b-red-500"
               }`}
               onClick={() => navigate("/")}
             >
@@ -42,7 +58,7 @@ const Header = () => {
             <li
               className={` cursor-pointer py-3 text-md font-semibold
              text-gray-400 border-b-[3px] border-b-transparent 
-             ${pathMatchRouter("/offer") && "text-blue-600  border-b-green-500"}`}
+             ${pathMatchRouter("/offer") && "text-gray-600  border-b-red-500"}`}
               onClick={() => navigate("/offer")}
             >
               Offers
@@ -50,11 +66,13 @@ const Header = () => {
             <li
               className={` cursor-pointer py-3 text-md font-semibold
              text-gray-400 border-b-[3px] border-b-transparent 
-             ${pathMatchRouter("/sign-in") && "text-blue-600 border-b-green-500"}`}
+             ${(pathMatchRouter("/sign-in") || pathMatchRouter("/profile")) && "text-gray-600 border-b-red-500"}`}
               onClick={() => navigate("/sign-in")}
             >
-              Sign In
+            {pageState}
             </li>
+
+           
           </ul>
         </div>
       </header>
