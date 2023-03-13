@@ -16,7 +16,7 @@ const Profile = () => {
   
   const OnLogout = () => {
     auth.signOut();
-    navigate('/')
+    navigate('/sign-in')
   }
 
 
