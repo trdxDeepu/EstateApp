@@ -28,19 +28,19 @@ const Profile = () => {
     }));
   }
 
-  async function onSubmit() {
+  async function oNSubmit() {
     try {
       if (auth.currentUser.displayName !== name) {
         await updateProfile(auth.currentUser, {
           displayName: name,
         });
 
-        const docRef = doc(db, "user", auth.currentUser.uid);
+        const docRef = doc(db, "users", auth.currentUser.uid);
         await updateDoc(docRef, {
           name,
         });
       }
-      toast.success("Profile updated successfully")
+      toast.success("Profile updated successfully");
     } catch (error) {
       toast.error("Could not Update the profile Details");
     }
@@ -85,7 +85,7 @@ const Profile = () => {
                 Do you want to change your name?
                 <span
                   onClick={() => {
-                    changeDetail && onSubmit();
+                    changeDetail && oNSubmit();
                     setChangeDetail((prevState) => !prevState);
                   }}
                   className="text-red-600 hover:text-red-700 transition ease-in-out
