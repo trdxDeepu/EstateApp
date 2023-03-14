@@ -1,6 +1,23 @@
 import React, { useState } from "react";
+import { getAuth } from "firebase/auth";
+import Spinner from "../Components/Spinner";
+import { toast } from "react-toastify";
+import { db } from "../Firebase";
+import { v4 as uuidv4 } from "uuid";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
 const CreateListing = () => {
+  const auth = getAuth();
+  const navigate = useNavigate();
+  const [geoLocation, setGeoLocation] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     type: "rent",
     name: "",
@@ -24,12 +41,15 @@ const CreateListing = () => {
     bedrooms,
     bathrooms,
     parking,
-    furnished,
     address,
+    furnished,
     description,
     offer,
     regularPrice,
-    discountPrice,
+    discountedPrice,
+    latitude,
+    longitude,
+    images,
   } = formData;
 
   const OnChange = (e) => {
@@ -56,12 +76,115 @@ const CreateListing = () => {
     }
   };
 
+  const OnSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    setLoading(true);
+    if (+discountedPrice >= +regularPrice) {
+      setLoading(false);
+      toast.error("Discounted price needs to be less than regular price");
+      return;
+    }
+    if (images.length > 6) {
+      setLoading(false);
+      toast.error("maximum 6 images are allowed");
+      return;
+    }
+    const apiKey = "AIzaSyBHjg0KU5uJ0pLj8_t55mrK8ME28WekFh4";
+    let getLocation = {};
+    let location;
+    if (geoLocation) {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`
+      );
+      const data = await response.json();
+      console.log(data);
+      getLocation.lat = data.results[0]?.geometry.location.lat ?? 0;
+      getLocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+
+      location = data.status === "ZERO_RESULTS" && undefined;
+
+      if (location === undefined) {
+        setLoading(false);
+        toast.error("please enter a correct address");
+        return;
+      } else {
+        getLocation.lat = latitude;
+        getLocation.lng = longitude;
+      }
+    }
+    async function storeImage(image) {
+      return new Promise((resolve, reject) => {
+        const storage = getStorage();
+        const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
+        const storageRef = ref(storage, filename);
+        const uploadTask = uploadBytesResumable(storageRef, image);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+            }
+          },
+          (error) => {
+            // Handle unsuccessful uploads
+            reject(error);
+          },
+          () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    }
+    const imgUrls = await Promise.all(
+      [...images].map((image) => storeImage(image))
+    ).catch((error) => {
+      setLoading(false);
+      toast.error("Images not uploaded");
+      return;
+    });
+    const formDataCopy = {
+      ...formData,
+      imgUrls,
+      getLocation,
+      timestamp: serverTimestamp(),
+      userRef: auth.currentUser.uid,
+    };
+    delete formDataCopy.images;
+    !formDataCopy.offer && delete formDataCopy.discountedPrice;
+    delete formDataCopy.latitude;
+    delete formDataCopy.longitude;
+    const docRef = await addDoc(collection(db, "listings"), formDataCopy);
+    setLoading(false);
+    toast.success("Listing created");
+   // navigate(`/category/${formDataCopy.type}/${docRef.id}`);
+  };
+
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <main className="max-w-md px-2 mx-auto ">
       <h1 className="text-3xl font-serif text-center mt-6 font-bold">
         Create Listing
       </h1>
-      <form>
+      <form onSubmit={OnSubmit}>
         <p className="text-lg mt-6 font-sans font-semibold">Sell / Rent</p>
         <div className="flex mt-3 ">
           <button
@@ -205,6 +328,36 @@ const CreateListing = () => {
         bg-white border-gray-300 transition duration-150 ease-in-out rounded
         focus:text-gray-700 focus:bg-white focus:border-slate-300 mb-6 "
         />
+        {!geoLocation && (
+          <div className="flex space-x-6 justify-start mb-6">
+            <div className="">
+              <p className="text-lg font-semibold">Latitude</p>
+              <input
+                type="number"
+                id="latitude"
+                value={latitude}
+                onChange={OnChange}
+                required
+                min="-90"
+                max="90"
+                className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:bg-white focus:text-gray-700 focus:border-slate-600 text-center"
+              />
+            </div>
+            <div className="">
+              <p className="text-lg font-semibold">Longitude</p>
+              <input
+                type="number"
+                id="longitude"
+                value={longitude}
+                onChange={OnChange}
+                required
+                min="-180"
+                max="180"
+                className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:bg-white focus:text-gray-700 focus:border-slate-600 text-center"
+              />
+            </div>
+          </div>
+        )}
         <p className="text-lg  font-semibold font-sans">Description</p>
         <textarea
           type="text"
@@ -281,8 +434,8 @@ const CreateListing = () => {
               <div className=" flex w-full justify-center items-center space-x-6">
                 <input
                   type="number"
-                  id="discountPrice"
-                  value={discountPrice}
+                  id="discountedPrice"
+                  value={discountedPrice}
                   onChange={OnChange}
                   min="50"
                   max="40000000"
