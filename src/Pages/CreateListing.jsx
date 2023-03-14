@@ -6,9 +6,11 @@ const CreateListing = () => {
     name: "",
     bedrooms: 1,
     bathrooms: 1,
+    parking: false,
+    furnished: true,
   });
 
-  const { type, name, bedrooms, bathrooms } = formData;
+  const { type, name, bedrooms, bathrooms, parking, furnished } = formData;
 
   const OnChange = () => {};
 
@@ -83,8 +85,8 @@ const CreateListing = () => {
             <p className="text-lg font-semibold  ">Bath</p>
             <input
               type="number"
-              id="bedrooms"
-              value={bedrooms}
+              id="bathrooms"
+              value={bathrooms}
               onChange={OnChange}
               min="1"
               max="20"
@@ -94,6 +96,68 @@ const CreateListing = () => {
               focus:text-gray-700 focus:bg-white focus:bg-border-slate-600 text-center "
             />
           </div>
+        </div>
+        <p className="text-lg mt-6 font-sans font-semibold">Parking</p>
+        <div className="flex mt-3 ">
+          <button
+            type="button"
+            className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md
+         rounded hover:shadow-lg focus:shadow-lg active:shadow-lg 
+         transition duration-150 ease-in-out w-full 
+         ${
+           !parking ? "bg-white text-black" : "bg-slate-600 text-white"
+         }`}
+            id="parking"
+            value={true}
+            onClick={OnChange}
+          >
+           Yes
+          </button>
+          <button
+            type="button"
+            className={` ml-3 px-7 py-3 font-medium text-sm uppercase shadow-md
+         rounded hover:shadow-lg focus:shadow-lg active:shadow-lg 
+         transition duration-150 ease-in-out w-full 
+         ${
+            parking ? "bg-white text-black" : "bg-slate-600 text-white"
+         }`}
+            id="parking"
+            value={false}
+            onClick={OnChange}
+          >
+            No
+          </button>
+        </div>
+        <p className="text-lg mt-6 font-sans font-semibold">Furnished</p>
+        <div className="flex mt-3 ">
+          <button
+            type="button"
+            className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md
+         rounded hover:shadow-lg focus:shadow-lg active:shadow-lg 
+         transition duration-150 ease-in-out w-full 
+         ${
+           !furnished ? "bg-white text-black" : "bg-slate-600 text-white"
+         }`}
+            id="furnished"
+            value={true}
+            onClick={OnChange}
+          >
+           Yes
+          </button>
+          <button
+            type="button"
+            className={` ml-3 px-7 py-3 font-medium text-sm uppercase shadow-md
+         rounded hover:shadow-lg focus:shadow-lg active:shadow-lg 
+         transition duration-150 ease-in-out w-full 
+         ${
+           furnished ? "bg-white text-black" : "bg-slate-600 text-white"
+         }`}
+            id="furnished"
+            value={false}
+            onClick={OnChange}
+          >
+            No
+          </button>
         </div>
       </form>
     </main>
