@@ -9,6 +9,7 @@ import ForgotPassword from "./SigninSignup/ForgotPassword";
 import Header from "./Components/Header";
 import PrivateRoute from "./Components/PrivateRoute";
 import CreateListing from "./Pages/CreateListing";
+// import Listing from "./Pages/Listing";
 
 const AppRouter = () => {
   return (
@@ -27,6 +28,7 @@ const AppRouter = () => {
           <Route path="/create-listing" element={<PrivateRoute />}>
             <Route path="/create-listing" element={<CreateListing />} />
           </Route>
+          {/* <Route path="/category/:categoryName/:listingId" element={<Listing/>}/> */}
         </Routes>
       </Router>
     </>
