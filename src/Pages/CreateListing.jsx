@@ -7,12 +7,15 @@ const CreateListing = () => {
     bedrooms: 1,
     bathrooms: 1,
     parking: false,
-    furnished: true,
+    furnished: false,
     address: "",
     description: "",
-    offer: true,
+    offer: false,
     regularPrice: 0,
-    discountPrice: 0,
+    discountedPrice: 0,
+    latitude: 0,
+    longitude: 0,
+    images: {},
   });
 
   const {
@@ -29,7 +32,29 @@ const CreateListing = () => {
     discountPrice,
   } = formData;
 
-  const OnChange = () => {};
+  const OnChange = (e) => {
+    let boolean = null;
+    if (e.target.value === "true") {
+      boolean = true;
+    }
+    if (e.target.value === "false") {
+      boolean = false;
+    }
+    // Files
+    if (e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        images: e.target.files,
+      }));
+    }
+    // Text/Boolean/Number
+    if (!e.target.files) {
+      setFormData((prevState) => ({
+        ...prevState,
+        [e.target.id]: boolean ?? e.target.value,
+      }));
+    }
+  };
 
   return (
     <main className="max-w-md px-2 mx-auto ">
@@ -45,7 +70,7 @@ const CreateListing = () => {
          rounded hover:shadow-lg focus:shadow-lg active:shadow-lg 
          transition duration-150 ease-in-out w-full 
          ${
-           type === "sale" ? "bg-white text-black" : "bg-slate-600 text-white"
+           type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"
          }`}
             id="type"
             value="sale"
@@ -59,10 +84,10 @@ const CreateListing = () => {
          rounded hover:shadow-lg focus:shadow-lg active:shadow-lg 
          transition duration-150 ease-in-out w-full 
          ${
-           type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"
+           type === "sale" ? "bg-white text-black" : "bg-slate-600 text-white"
          }`}
             id="type"
-            value="sale"
+            value="rent"
             onClick={OnChange}
           >
             Rent
@@ -212,7 +237,7 @@ const CreateListing = () => {
          rounded hover:shadow-lg focus:shadow-lg active:shadow-lg 
          transition duration-150 ease-in-out w-full 
          ${offer ? "bg-white text-black" : "bg-slate-600 text-white"}`}
-            id="furnished"
+            id="offer"
             value={false}
             onClick={OnChange}
           >
