@@ -10,8 +10,9 @@ const CreateListing = () => {
     furnished: true,
     address: "",
     description: "",
-    offer: false,
+    offer: true,
     regularPrice: 0,
+    discountPrice: 0,
   });
 
   const {
@@ -25,6 +26,7 @@ const CreateListing = () => {
     description,
     offer,
     regularPrice,
+    discountPrice,
   } = formData;
 
   const OnChange = () => {};
@@ -245,6 +247,62 @@ const CreateListing = () => {
             </div>
           </div>
         </div>
+        {offer && (
+          <div className="mt-6 flex items-center mb-6 ">
+            <div className=" ">
+              <p className="text-lg font-sans font-semibold ">
+                Discounted Price
+              </p>
+              <div className=" flex w-full justify-center items-center space-x-6">
+                <input
+                  type="number"
+                  id="discountPrice"
+                  value={discountPrice}
+                  onChange={OnChange}
+                  min="50"
+                  max="40000000"
+                  required={offer}
+                  className="w-full px-4 py-2 text-xl text-gray-700 bg-white
+              border border-gray-300 rounded transition duration-150 ease-in-out
+              focus:bg-white focus:border-slate-600 focus:text-gray-700 text-center
+              "
+                />
+                {type === "rent" && (
+                  <div>
+                    <p className="text-md w-full whitespace-nowrap ">
+                      {" "}
+                      $ / Month
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="mb-6 ">
+          <p className="font-sans font-semibold text-lg ">Images</p>
+          <p className="text-gray-600">The first image will be cover (max 6)</p>
+          <input
+            type="file"
+            id="images"
+            onChange={OnChange}
+            accept=".jpg,.png,.jpeg"
+            multiple
+            required
+            className="w-full px-3 py-1.5 text-gray-700 bg-white border border-b-gray-300 rounded-md
+            transition duration-150 ease-in-out
+            focus:bg-white focus:border-slate-600   "
+          />
+        </div>
+        <button
+          type="submit"
+          className="mb-6 w-full px-7 py-3 bg-blue-600 font-medium font-serif 
+        rounded-md shadow-md text-white hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 
+        focus : shadow-lg active:bg-blue-800 active: shadow-lg
+        transition duration-150 ease-in-out "
+        >
+          Create Listing
+        </button>
       </form>
     </main>
   );
