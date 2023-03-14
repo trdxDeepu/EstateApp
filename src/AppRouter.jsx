@@ -8,6 +8,7 @@ import SignUp from "./SigninSignup/SignUp";
 import ForgotPassword from "./SigninSignup/ForgotPassword";
 import Header from "./Components/Header";
 import PrivateRoute from "./Components/PrivateRoute";
+import CreateListing from "./Pages/CreateListing";
 
 const AppRouter = () => {
   return (
@@ -23,6 +24,7 @@ const AppRouter = () => {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/create-listing" element={<CreateListing />} />
         </Routes>
       </Router>
     </>
