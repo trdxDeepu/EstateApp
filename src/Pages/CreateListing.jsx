@@ -3,9 +3,12 @@ import React, { useState } from "react";
 const CreateListing = () => {
   const [formData, setFormData] = useState({
     type: "rent",
+    name: "",
+    bedrooms: 1,
+    bathrooms: 1,
   });
 
-  const { type } = formData;
+  const { type, name, bedrooms, bathrooms } = formData;
 
   const OnChange = () => {};
 
@@ -45,6 +48,52 @@ const CreateListing = () => {
           >
             Rent
           </button>
+        </div>
+        <p className="text-lg mt-6 font-semibold font-sans">Name</p>
+        <input
+          type="text"
+          id="name"
+          value={name}
+          onChange={OnChange}
+          placeholder="Name "
+          maxLength="32"
+          minLength="10"
+          required
+          className=" mt-3 w-full px-4 py-2 text-xl text-gray-700
+        bg-white border-gray-300 transition duration-150 ease-in-out rounded
+        focus:text-gray-700 focus:bg-white focus:border-slate-300 mb-6 "
+        />
+        <div className="flex space-x-6 mb-6  ">
+          <div className="">
+            <p className="  text-lg font-semibold ">Bed</p>
+            <input
+              type="number"
+              id="bedrooms"
+              value={bedrooms}
+              onChange={OnChange}
+              min="1"
+              max="20"
+              required
+              className=" mt-3 w-full px-4 py-2 text-xl text-gray-700 bg-white
+              border border-gray-700 rounded transition duration-150 ease-in-out
+              focus:text-gray-700 focus:bg-white focus:bg-border-slate-600 text-center "
+            />
+          </div>
+          <div className="">
+            <p className="text-lg font-semibold  ">Bath</p>
+            <input
+              type="number"
+              id="bedrooms"
+              value={bedrooms}
+              onChange={OnChange}
+              min="1"
+              max="20"
+              required
+              className="  mt-3 w-full px-4 py-2 text-xl text-gray-700 bg-white
+              border border-gray-700 rounded transition duration-150 ease-in-out
+              focus:text-gray-700 focus:bg-white focus:bg-border-slate-600 text-center "
+            />
+          </div>
         </div>
       </form>
     </main>
