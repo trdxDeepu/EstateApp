@@ -188,8 +188,6 @@ const CreateListing = () => {
     return <Spinner />;
   }
 
-  
-
   return (
     <>
       <main className="max-w-md px-2 mx-auto ">
@@ -497,7 +495,6 @@ const CreateListing = () => {
           </button>
         </form>
       </main>
-     
     </>
   );
 };
