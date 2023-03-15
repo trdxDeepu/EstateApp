@@ -11,8 +11,34 @@ const ListingItem = ({ listing, id }) => {
         <Moment fromNow>{listing.timestamp?.toDate()}</Moment>
         <div>
           <div>
-            <MdLocationOn/>
+            <MdLocationOn />
             <p>{listing.address}</p>
+          </div>
+          <p>{listing.name}</p>
+          <p>
+            $
+            {listing.offer
+              ? listing.discountedPrice
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              : listing.regularPrice
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {listing.type === "rent" && "/month"}
+          </p>
+          <div>
+            <div>
+              <p>
+                {listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : "1 Bed"}
+              </p>
+            </div>
+            <div>
+              <p>
+                {listing.bathrooms > 1
+                  ? `${listing.bathrooms} Baths`
+                  : "1 Bath"}
+              </p>
+            </div>
           </div>
         </div>
       </Link>
