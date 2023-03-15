@@ -58,13 +58,13 @@ export default function ListingItem({ listing, id, onEdit, onDelete }) {
       </Link>
       {onDelete && (
         <FaTrash
-          className="absolute bottom-2 right-2 h-[14px] cursor-pointer text-red-500"
+          className=" hover:scale-110 hover:shadow-md active:shadow-lg absolute bottom-2 right-2 h-[14px] cursor-pointer text-red-500"
           onClick={() => onDelete(listing.id)}
         />
       )}
       {onEdit && (
         <MdEdit
-          className="absolute bottom-2 right-7 h-4 cursor-pointer "
+          className="absolute bottom-2 right-7 h-4 cursor-pointer hover:scale-110 hover:shadow-md active:shadow-lg "
           onClick={() => onEdit(listing.id)}
         />
       )}

@@ -11,6 +11,7 @@ import {
   collection,
   doc,
   getDocs,
+  deleteDoc,
   orderBy,
   query,
   where,
@@ -80,6 +81,22 @@ const Profile = () => {
     }
     fetchUserListings();
   }, [auth.currentUser.uid]);
+
+  async function onDelete(listingId) {
+    if (window.confirm("Are You Sure you want to delete ?")) {
+      await deleteDoc(doc(db, "listings", listingId));
+      const updatedListings = listings.filter(
+        (listing) => listing.id !== listingId
+      );
+      setListings(updatedListings);
+      toast.success("Deleted Successfully the listing")
+    }
+  }
+
+  function onEdit(listingId) {
+    navigate(`/edit-listing/${listingId}`);
+  }
+
   return (
     <>
       <section className="mx-w-6xl mx-auto flex justify-center items-center flex-col">
