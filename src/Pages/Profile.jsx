@@ -164,7 +164,7 @@ const Profile = () => {
       <div className="max-w-6xl px-3 mt-6 mx-auto">
         {!loading && listings.length > 0 && (
           <>
-            <h2 className="text-2xl text-center font-semibold mb-6">
+            <h2 className=" font-serif font-extrabold text-2xl text-center  mb-6">
               My Listings
             </h2>
             <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">

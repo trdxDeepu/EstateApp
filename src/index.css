@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Poppins&display=swap');
 
-body{
-    background-color: rgb(240,253,244);
-} 
+body {
+  background-color: rgb(240, 253, 244);
+  font-family: 'Oswald', sans-serif;
+}
