@@ -21,6 +21,7 @@ import {
   FaChair,
 } from "react-icons/fa";
 import { getAuth } from "firebase/auth";
+import Contact from "../Components/Contact";
 
 const Listing = () => {
   const auth = getAuth();
