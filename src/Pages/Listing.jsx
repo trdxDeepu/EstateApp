@@ -1,27 +1,39 @@
-// import React, { useEffect, useState } from "react";
-// import { useParams } from "react-router";
-// import { db } from "../Firebase";
-// import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from 'firebase/firestore'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
+import Spinner from '../Components/Spinner'
+import { db } from '../Firebase'
 
-// const Listing = () => {
-//   const params = useParams();
-//   const [listing, setListing] = useState(null);
-//   const [loading, setLoading] = useState(true);
+const Listing = () => {
+    const [listing,setListing] = useState(null)
+    const [loading,setLoading] = useState(true)
+    const params = useParams()
 
-//   useEffect(() => {
-//     async function fetchListing() {
-//       const docRef = doc(db, "listing", params.listingId);
-//       const docSnap = await getDoc(docRef);
-//       if (docSnap.exists()) {
-//         setListing(docSnap.data());
-//         setLoading(false);
-//       }
-//     }
-//     fetchListing();
-//     console.log(listing);
-//   }, [params.listingId, listing]);
+    useEffect(()=>{
 
-//   return <div>listing</div>;
-// };
+        async function fetchListing(){
+            const docRef = doc(db,"listings",params.listingId)
+            const docSnap = await getDoc(docRef)
+            if(docSnap.exists()){
+                setListing(docSnap.data())
+                setLoading(false)
+                
 
-// export default Listing;
+            }
+
+        }
+        fetchListing();
+        
+
+    },[params.listingID])
+
+    if(loading){
+        return <Spinner/>
+    }
+
+  return (
+    <div>{listing.name}</div>
+  )
+}
+
+export default Listing

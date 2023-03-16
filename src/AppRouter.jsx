@@ -9,8 +9,8 @@ import ForgotPassword from "./SigninSignup/ForgotPassword";
 import Header from "./Components/Header";
 import PrivateRoute from "./Components/PrivateRoute";
 import CreateListing from "./Pages/CreateListing";
-import EditingListing from "./Components/EditingListing";
-// import Listing from "./Pages/Listing";
+import EditingListing from "./Pages/EditingListing";
+import Listing from "./Pages/Listing";
 
 const AppRouter = () => {
   return (
@@ -35,7 +35,7 @@ const AppRouter = () => {
               element={<EditingListing />}
             />
           </Route>
-          {/* <Route path="/category/:categoryName/:listingId" element={<Listing/>}/> */}
+          <Route path="/category/:categoryName/:listingId" element={<Listing/>}/>
         </Routes>
       </Router>
     </>
