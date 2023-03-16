@@ -23,7 +23,10 @@ const Contact = ({ userRef, listing }) => {
     <>
       {landLord !== null && (
         <div className="flex flex-col w-full ">
-          <p>Contact {landLord.name}</p> for the {listing.name.toLowerCase()}
+          <p className="font-black">
+            Contact <span className="text-blue-900 font-semibold ">{landLord.name}</span> for
+            the <span className="text-blue-900 font-semibold"> {listing.name.toLowerCase()}</span>
+          </p>
           <div className="mt-3 mb-6">
             <textarea
               name="message"
