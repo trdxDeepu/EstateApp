@@ -49,7 +49,7 @@ const Header = () => {
             <li
               className={` cursor-pointer py-3 text-md font-semibold text-gray-400
               border-b-[3px] border-b-transparent ${
-                pathMatchRouter("/") && "text-gray-600 border-b-red-500"
+                pathMatchRouter("/") && "text-gray-600 border-b-blue-500"
               }`}
               onClick={() => navigate("/")}
             >
@@ -58,7 +58,7 @@ const Header = () => {
             <li
               className={` cursor-pointer py-3 text-md font-semibold
              text-gray-400 border-b-[3px] border-b-transparent 
-             ${pathMatchRouter("/offer") && "text-gray-600  border-b-red-500"}`}
+             ${pathMatchRouter("/offer") && "text-gray-600  border-b-blue-500"}`}
               onClick={() => navigate("/offer")}
             >
               Offers
@@ -66,8 +66,8 @@ const Header = () => {
             <li
               className={` cursor-pointer py-3 text-md font-semibold
              text-gray-400 border-b-[3px] border-b-transparent 
-             ${(pathMatchRouter("/sign-in") || pathMatchRouter("/profile")) && "text-gray-600 border-b-red-500"}`}
-              onClick={() => navigate("/sign-in")}
+             ${(pathMatchRouter("/sign-in") || pathMatchRouter("/profile")) && "text-gray-600 border-b-blue-500"}`}
+              onClick={() => navigate("/profile")}
             >
             {pageState}
             </li>
