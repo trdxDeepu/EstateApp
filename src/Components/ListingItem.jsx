@@ -23,7 +23,7 @@ export default function ListingItem({ listing, id, onEdit, onDelete }) {
         </Moment>
         <div className="w-full p-[10px]">
           <div className="flex items-center space-x-1">
-            <MdLocationOn className="h-12 w-12 text-green-600" />
+            <MdLocationOn className="h-6 w-6 text-green-600" />
             <p className="font-semibold text-sm mb-[2px] text-gray-600 truncate">
               {listing.address}
             </p>
