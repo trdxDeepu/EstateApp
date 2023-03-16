@@ -12,7 +12,7 @@ import SwiperCore, {
 } from "swiper";
 import "swiper/css/bundle";
 import { Fa500Px, FaShare } from "react-icons/fa";
-import { toast } from "react-toastify";
+import {FaMapMarkerAlt} from 'react-icons/fa'
 
 const Listing = () => {
   const [listing, setListing] = useState(null);
@@ -73,9 +73,36 @@ const Listing = () => {
       >
         <FaShare className="text-lg text-slate-500 " />
       </div>
-      {shareLinkCopy && (<p className="fixed top-[23%] right-[5%] 
+      {shareLinkCopy && (
+        <p
+          className="fixed top-[23%] right-[5%] 
       font-semibold border-2 border-gray-400 rounded-md 
-      bg-white z-10 p-2 ">Link Copied</p>)}
+      bg-white z-10 p-2 "
+        >
+          Link Copied
+        </p>
+      )}
+
+      <div className=" m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5 ">
+        <div className="w-full">
+          <p className="text-2xl font-semibold mb-3 text-blue-900 font-serif">
+            {listing.name} - ${" "}
+            {listing.offer
+              ? listing.discountedPrice
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              : listing.regularPrice
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {listing.type === "rent" ? " / month" : ""}
+          </p>
+          <p className=" font-serif flex items-center mt-6 mb-3 font-semibold">
+            <FaMapMarkerAlt className="text-green-700 mr-1" />
+            {listing.address}
+          </p>
+        </div>
+        <div className="bg-blue-300 h-[200px] w-full lg-[400px]"></div>
+      </div>
     </main>
   );
 };
