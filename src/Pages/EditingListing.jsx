@@ -17,7 +17,7 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../Firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
