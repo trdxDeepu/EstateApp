@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Spinner from "../components/Spinner";
+import Spinner from "../Components/Spinner";
 import { toast } from "react-toastify";
 import {
   getStorage,
