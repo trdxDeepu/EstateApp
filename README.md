@@ -32,7 +32,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 ```bash
 Fork this project and locally install in this projects as well. 
-![alt text](image.png)
+
 
 and then  clone repo from ur github account locally and have some feature to add on 
 
